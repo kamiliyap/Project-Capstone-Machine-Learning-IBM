@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Hasil Prediksi Produksi Panen Padi      
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <style>
+  /* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Font Family */
+body, input, select {
+    font-family: "Poppins", sans-serif;
+}
+
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    /* background: linear-gradient(to bottom, #4CAF90, #1E90FF); */
+    background-image: url("static/bground.jpeg");
+    /* background-attachment: fixed; */
+    /* background-repeat: no-repeat; */
+    background-size: cover;
+    /* position: relative; */
+    /* animation: gradientAnimation 1s linear infinite; */
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 0% 100%;
+    }
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 5rem;
+}
+
+/* Navigation Styles */
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: white;
+    padding: 0.5rem 4rem;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav img {
+    width: 7rem;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: white;
+    padding: 0.5rem 4rem;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer img {
+    width: 7rem;
+}
+
+.footer img.imgBottom {
+    width: 35rem;
+    object-fit: cover;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: rgb(35, 35, 35);
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 5px;
+    color: black;
+    font-weight: 450;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: rgb(109, 11, 228);
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: rgb(61, 6, 129);
+    transform: scale(0.95);
+}
+
+/* Result Styles */
+.result {
+    color: rgb(35, 35, 35);
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.result h2 {
+    margin-top: 0;
+    color: rgb(35, 35, 35);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+/* Select Box Styles */
+.select-box {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 2rem;
+    text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768.98px) {
+    .github-nav {
+        display: none;
+    }
+
+    .nav {
+        position: static;
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .nav h1 {
+        font-size: 16px;
+    }
+
+    .container {
+        margin: 0 1rem;
+    }
+
+    .form-group {
+        flex-grow: 1;
+        width: 100%;
+    }
+
+    .footer {
+        margin-top: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 2.3rem;
+    }
+
+    .footer img {
+        width: 4rem;
+    }
+
+    .footer img.imgIL {
+        display: block;
+        width: 7rem;
+    }
+
+    .footer img.imgBottom {
+        width: 20rem;
+        display: none;
+    }
+}
+</style>
+  <body>
+    <nav class="nav">
+      <!-- <span></span> -->
+      <img
+        class="imgIBM github-nav"
+        src="{{ url_for('static', filename='IL.png') }}"
+        alt=""
+      />
+      <h1>Hasil Prediksi Produksi Panen Padi</h1>
+      <div></div>
+    </nav>
+    <div class="container">
+      <!-- <h1>Students Adaptability Level in Online Education Prediction</h1> -->
+      <form method="POST">
+        <div class="form-group">
+          <label for="Provinsi">Provinsi:</label>
+          <select class="select-box" name="Provinsi" id="Provinsi" required>
+            <option value="Sumatera Selatan">Sumatera Selatan</option>
+            <option value="Aceh">Aceh</option>
+            <option value="Bengkulu">Bengkulu</option>
+            <option value="Lampung">Lampung</option>
+            <option value="Jambi">Jambi</option>
+            <option value="Riau">Riau</option>
+            <option value="Sumatera Selatan">Sumatera Utara</option>
+            <option value="Sumatera Utara">Sumatera Barat</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="Tahun">Tahun:</label>
+            <input type="text" name="Tahun" id="Tahun" required>
+        </div>
+
+        <div class="form-group">
+          <label for="Produksi">Produksi:</label>
+            <input type="text" name="Produksi" id="Produksi" required>
+        </div>
+
+        <div class="form-group">
+          <label for="Luas Panen">Luas Panen:</label>
+            <input type="text" name="Luas Panen" id="Luas Panen" required>
+        </div>
+
+        <div class="form-group">
+          <label for="Curah hujan">Curah hujan:</label>
+            <input type="text" name="Curah hujan" id="Curah hujan" required>
+        </div>
+
+        <div class="form-group">
+          <label for="Kelembapan">Kelembapan:</label>
+            <input type="text" name="Kelembapan" id="Kelembapan" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="Suhu rata-rata">Suhu rata-rata:</label>
+            <input type="text" name="Suhu rata-rata" id="Suhu rata-rata" required>
+        </div>
+
+        <input type="submit" value="Predict" />
+      </form>
+
+      {% if prediction %}
+      <div class="result">
+        <h2>Prediction Result</h2>
+        <p>Hasil Prediksi:
+            {% if prediction == 'Rendah' %}
+                <span class="Rendah">Hasil Produksi Rendah</span>
+            {% elif prediction == 'Tinggi' %}
+                <span class="Tinggi">Hasil Produksi Tinggi</span>
+            {% elif prediction == 'Sangat Tinggi' %}
+                <span class="Sangat Tinggi">Sangat Tinggi</span>
+            {% else %}
+                <span class="Tidak Diketahui">Hasil Produksi Tidak Diketahui</span>
+            {% endif %}
+        </p>
+      </div>
+    {% endif %}
+    
+    
+
+      
+    <footer class="footer">
+      <img class="" src="{{ url_for('static', filename='IBM.png') }}" alt="" />
+      <img
+        class="imgBottom"
+        src="{{ url_for('static', filename='diagram-removebg-preview.png') }}"
+        alt=""
+      />
+      <img class="imgIL" src="{{ url_for('static', filename='IL.png') }}" alt="" />
+      <a href="https://github.com/omidiyanto/student-adaptability-prediction">
+        <img src="{{ url_for('static', filename='GitHub-Logo.png') }}" alt="Deskripsi gambar" />
+      </a>
+    </footer>
+  </body>
+</html>
+<!--Heart Disease Predict Prediction Web - by Dicky Wahyudi :D 
